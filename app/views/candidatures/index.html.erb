@@ -1,0 +1,49 @@
+<h1>Lista de Candidaturas</h1>
+
+
+<% @candidatures_filtered.each do |dep, candidatures| %>
+  <% if not candidatures.empty? %>
+    <h2><%= dep.upcase %></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Aluno</th>
+        <th><%= t('activerecord.attributes.candidature.course1_id') %></th>
+        <th><%= t('activerecord.attributes.candidature.course2_id') %></th>
+        <th><%= t('activerecord.attributes.candidature.course3_id') %></th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% candidatures.each do |candidature| %>
+          <tr>
+            <td><%= candidature.student.name %></td>
+            <td>
+              <% course = Course.find(candidature.course1_id) %>
+              <%= course.course_code + " - " + course.name %>
+            </td>
+            <td>
+              <% if candidature.course2_id != nil %>
+              <% course = Course.find(candidature.course2_id) %>
+              <%= course.course_code + " - " + course.name %>
+              <% end %>
+            </td>
+            <td>
+              <% if candidature.course3_id != nil %>
+              <% course = Course.find(candidature.course3_id) %>
+              <%= course.course_code + " - " + course.name %>
+              <% end %>
+            </td>
+            <td><%= link_to 'Ver', candidature %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+<% end %>
+
+<br>
+
+<% if student_signed_in? %>
+    <%= link_to 'Nova Candidatura', new_candidature_path %>
+<% end %>

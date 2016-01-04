@@ -1,0 +1,9 @@
+log/development.log
+*~
+tmp/*
+*.swp
+coverage/*
+log/*
+*.sublime-workspace
+!dumpfiles/.keep
+dumpfiles/*

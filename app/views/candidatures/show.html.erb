@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong><%= t('activerecord.attributes.student.student') + ':' %></strong>
+  <%= @candidature.student.name %>
+  <%= link_to " (mais informações)", @candidature.student %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.student.nusp') + ':' %></strong>
+  <%= @candidature.student.nusp %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.course1_id') + ':' %></strong>
+  <% course = Course.find(@candidature.course1_id) %>
+  <%= course.course_code + " - " + course.name %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.course2_id') + ':' %></strong>
+  <% if @candidature.course2_id != nil%>
+    <% course = Course.find(@candidature.course2_id) %>
+    <%= course.course_code + " - " + course.name %>
+  <% else %>
+    <i>Nenhum</i>
+  <% end %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.course3_id') + ':' %></strong>
+  <% if @candidature.course3_id != nil%>
+    <% course = Course.find(@candidature.course3_id) %>
+    <%= course.course_code + " - " + course.name %>
+  <% else %>
+    <i>Nenhum</i>
+  <% end %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.daytime_availability') + ':' %></strong>
+  <%= show_yes_or_no(@candidature.daytime_availability) %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.nighttime_availability') + ':' %></strong>
+  <%= show_yes_or_no(@candidature.nighttime_availability) %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.time_period_preference') + ':' %></strong>
+  <%= daytimePreference()[@candidature.time_period_preference.to_i][0] %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.observation') + ':' %></strong>
+  <%= (@candidature.observation) %>
+</p>
+
+<p>
+  <strong><%= t('activerecord.attributes.candidature.transcript_file_path') + ':' %></strong>
+  <%= link_to "Download", download_candidature_transcript_path(@candidature) %>
+</p>
+
+<% if student_signed_in? %>
+  <%= link_to 'Editar', edit_candidature_path(@candidature) %> |
+  <%= link_to 'Remover', @candidature, method: :delete, data: { confirm: 'Tem certeza?' } %> |
+<% end %>
+<%= link_to 'Voltar', candidatures_path %>
